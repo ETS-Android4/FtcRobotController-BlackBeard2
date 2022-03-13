@@ -2,12 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous
-public class OutnomicOpMode extends LinearOpMode {
+public class RedAutonomous extends LinearOpMode {
 
     // runtime variable
     private ElapsedTime runtime = new ElapsedTime();
@@ -18,6 +19,8 @@ public class OutnomicOpMode extends LinearOpMode {
     DcMotor motorFrontRight;
     DcMotor motorBackRight;
     DcMotor carousel;
+
+    CRServo carousel2;
 
     //finals
     private static final double DRIVE_POWER = 1;
@@ -31,9 +34,9 @@ public class OutnomicOpMode extends LinearOpMode {
         motorFrontRight = hardwareMap.dcMotor.get("fr");
         motorBackRight = hardwareMap.dcMotor.get("br");
         carousel = hardwareMap.get(DcMotor.class, "carusle");
+        carousel2 = hardwareMap.get(CRServo.class, "carousel2");
         MotorController controller = new MotorController(motorFrontLeft,motorBackLeft,motorFrontRight,motorBackRight, telemetry);
         debug("Status", "Initialized"); //update the status in the Telemetry.
-
         waitForStart();// Wait for the game to start
         debug("Status", "Started!");
 //        controller.forward(DRIVE_POWER, controller.cmToTicks(100));
@@ -47,7 +50,9 @@ public class OutnomicOpMode extends LinearOpMode {
 
         //carousel mission
         controller.left(DRIVE_POWER, controller.cmToTicks(180)); //drive left to get to the target
+        carousel2.setPower(1);
         controller.runMotorForTime(carousel, CAROUSEL_POWER, 5000); //spin the carousel to drop the duck
+        carousel2.setPower(0);
         controller.forward(DRIVE_POWER, controller.cmToTicks(40)); //drive forward
         controller.rotationRight(DRIVE_POWER, controller.cmToTicks(60)); //TURN right
         controller.forward(DRIVE_POWER, controller.cmToTicks(360)); //drive forward
