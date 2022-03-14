@@ -132,7 +132,7 @@ public class Elevator {
 //        elevatorMotor.setPower(-gamepad2.left_stick_y + feedforward); // - feedforward
         //} else {
         if(gamepad2.dpad_right){
-            new Thread(() -> move_elevator_to_position(50));
+            move_elevator_to_position(50);
         }
         if (gamepad2.x){ //to open the intake system
             elevatorMotor.setPower(0.7);

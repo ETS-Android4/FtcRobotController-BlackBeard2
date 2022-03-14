@@ -35,18 +35,26 @@ public class BlueAutonomous extends LinearOpMode {
         motorBackRight = hardwareMap.dcMotor.get("br");
         carousel = hardwareMap.get(DcMotor.class, "carusle");
         carousel2 = hardwareMap.get(CRServo.class, "carousel2");
-        MotorController controller = new MotorController(motorFrontLeft,motorBackLeft,motorFrontRight,motorBackRight, telemetry);
+        MotorController controller = new MotorController(motorFrontLeft,motorBackLeft,motorFrontRight,motorBackRight,telemetry);
+        ElevatorController elevator = new ElevatorController(hardwareMap);
         debug("Status", "Initialized"); //update the status in the Telemetry.
         waitForStart();// Wait for the game to start
         debug("Status", "Started!");
-//        controller.forward(DRIVE_POWER, controller.cmToTicks(100));
-//        elevator.goToLevel(Level.LEVEL3);
-//        elevator.flipBox();
-//
-//        MotorController.sleep(500);
-//
-//        elevator.retrieveElevator();
-//        controller.backward(DRIVE_POWER, controller.cmToTicks(100));
+        controller.forward(DRIVE_POWER, controller.cmToTicks(80));
+        controller.rotationRight(DRIVE_POWER, controller.cmToTicks(240));
+        controller.backward(DRIVE_POWER, controller.cmToTicks(5));
+        elevator.MoveElevatorToPosition(140);
+        elevator.flipBox();
+        MotorController.sleep(500);
+
+        elevator.MoveElevatorToPosition(25);
+
+        controller.backward(DRIVE_POWER, controller.cmToTicks(90));
+
+        MotorController.sleep(500);
+
+        elevator.MoveElevatorToPosition(25);
+        controller.backward(DRIVE_POWER, controller.cmToTicks(100));
 
         //carousel mission
         controller.right(DRIVE_POWER, controller.cmToTicks(180)); //drive left to get to the target
